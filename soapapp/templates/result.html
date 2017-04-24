@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+   <body>
+       <form class="form-inline" action = "http://localhost:5000/result" method = "POST">
+          <div class="form-group">
+            <input type="text" class="form-control" id="formGroupExampleInput" name="Country" placeholder="Search Again">
+          </div>
+        </form>
+       
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Flag</th>
+              <th>Country</th>
+              <th>Capital</th>
+              <th>Currency</th>
+              <th>Conversion Rate</th>
+            </tr>
+          </thead>
+
+          <tbody>
+              
+              <tr>
+                  <th scope="row"><img src={{ result[1] }} alt="Flag" height="42" width="42"></th>
+                  {% for key in result[0] %}
+                  <td>{{ key }}</td>
+                  {% endfor %}
+              </tr>
+          </tbody>
+        </table>
+      
+   </body>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</html>
