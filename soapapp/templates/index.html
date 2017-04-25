@@ -1,13 +1,28 @@
 <html>
    <body>
+       
+       <div id="map" style="width:100%;height:100%;position:absolute;top:0%;left:0%;right:0%;background:white"></div>
       
-       <form class="form-inline" action = "http://localhost:5000/result" method = "POST">
+       <form class="form-inline" action = "http://localhost:5000/result" method = "POST" style="width:20%;height:12%;position:absolute;top:10%;left:40%;right:40%;">
           <div class="form-group">
             <input type="text" class="form-control" id="formGroupExampleInput" name="Country" placeholder="Enter Country">
           </div>
         </form>
        
    </body>
+    
+    <script>
+        function myMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(40,150.644),
+                zoom: 2,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            }
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        }
+    </script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoN03C0n28tPitN2z5rqAI2mC0O95z_Ws&callback=myMap"></script>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -16,4 +31,6 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Calligraffitti" rel="stylesheet">
 </html>

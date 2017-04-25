@@ -7,13 +7,13 @@ def countryinfo(Country):
     #Country = raw_input("Enter a Country: ")
     wsdl = 'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL'
     client = zeep.Client(wsdl=wsdl)
-    iso = client.service.CountryISOCode(Country)
+    iso = client.service.CountryISOCode(Country)    
     conversion = currency(Country)
     CapCity = client.service.CapitalCity(iso)
     loc = location(CapCity)
     Cur = client.service.CountryCurrency(iso)
     flag = client.service.CountryFlag(iso)
-    return [[Country,CapCity,Cur["sName"],conversion],flag,loc]
+    return [[Country,CapCity,loc[0],loc[1],Cur["sName"],conversion],flag]
 
 from geopy.geocoders import Nominatim
 
@@ -33,7 +33,10 @@ def currency(Country):
         if country_name.upper() in data.countries:
             cur = currency
             c = CurrencyConverter()
-            conversion = c.convert(1, 'EUR', cur)
+            try:
+                conversion = c.convert(1, 'EUR', cur)
+            except KeyError:
+                conversion = "Sorry no conversion information"
             return conversion
             break
 
@@ -46,7 +49,11 @@ def result():
    if request.method == 'POST':
       result = request.form
       for k,v in result.iteritems():
-        result = countryinfo(v)    
+        try:
+            result = countryinfo(v)
+        except AttributeError or UndefinedError:
+            result = [["Null","Null",0,0,"Null","Null"],0]
+            break
       return render_template("result.html",result = result)
 
 if __name__ == '__main__':
