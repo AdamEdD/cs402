@@ -1,13 +1,20 @@
+"""
+Soap service to get Country info based on user input
+"""
 import zeep
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
 def countryinfo(Country):
-    #Country = raw_input("Enter a Country: ")
+    """
+    function to read and return country data from wsdl on user input
+    
+    wsdl = http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL
+    """
     wsdl = 'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL'
     client = zeep.Client(wsdl=wsdl)
-    iso = client.service.CountryISOCode(Country)    
+    iso = client.service.CountryISOCode(Country)  
     conversion = currency(Country)
     CapCity = client.service.CapitalCity(iso)
     loc = location(CapCity)
@@ -18,6 +25,10 @@ def countryinfo(Country):
 from geopy.geocoders import Nominatim
 
 def location(Capital):
+    """
+    Calculate lat and lon from wsdl Capital data
+    return lat,lon
+    """
     geolocator = Nominatim()
     location = geolocator.geocode(Capital)
     loc = [location.latitude, location.longitude]
@@ -27,6 +38,9 @@ from currency_converter import CurrencyConverter
 import money
 
 def currency(Country):
+    """
+    Calculate and return currency conversion rate from euro
+    """
     country_name = Country
     
     for currency, data in money.CURRENCY.iteritems():
